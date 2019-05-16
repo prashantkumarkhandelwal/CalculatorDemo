@@ -25,23 +25,24 @@
 
         <TextView
             android:id="@+id/tvReresulttv"
-            android:textStyle="italic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:padding="6dp"
             android:text="0"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:textStyle="italic" />
+
         <TextView
             android:id="@+id/msg"
-            android:textStyle="italic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:padding="6dp"
             android:text=" "
             android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <View
@@ -51,10 +52,10 @@
         android:layout_marginTop="20dp" />
 
     <LinearLayout
-        android:gravity="bottom"
-android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
         android:orientation="vertical">
 
         <LinearLayout
