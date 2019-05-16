@@ -1,15 +1,14 @@
 package com.example.prashant.calculatordemo;
 
-import android.os.Bundle;
+
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.mariuszgromada.math.mxparser.Expression;
-
 public class MainActivity extends AppCompatActivity {
-    TextView inputtexttv, tvReresulttv,msg;
+    TextView tvReresulttv, msg;
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, cancelbtn, addbtn,
             subbtn, dividebtn, percebtgebtn, dotbtn,
             eualbtn, doublezerobtn, multiplybtn;
@@ -29,17 +28,18 @@ public class MainActivity extends AppCompatActivity {
         btn8 = (Button) findViewById(R.id.eigbtn);
         btn9 = (Button) findViewById(R.id.ninebtn);
         cancelbtn = (Button) findViewById(R.id.cancelbtn);
-        addbtn= (Button) findViewById(R.id.addbtn);
+        addbtn = (Button) findViewById(R.id.addbtn);
         subbtn = (Button) findViewById(R.id.subtractbtn);
         percebtgebtn = (Button) findViewById(R.id.percentgebtn);
         multiplybtn = (Button) findViewById(R.id.multiplybtn);
         eualbtn = (Button) findViewById(R.id.equalbtn);
         dotbtn = (Button) findViewById(R.id.dotbtn);
-        doublezerobtn= (Button) findViewById(R.id.doublezerobtn);
-        dividebtn= (Button) findViewById(R.id.dividebtn);
-        inputtexttv= (TextView) findViewById(R.id.inputtexttv);
-        tvReresulttv= (TextView) findViewById(R.id.tvReresulttv);
-        msg= (TextView) findViewById(R.id.msg);
+        doublezerobtn = (Button) findViewById(R.id.doublezerobtn);
+        dividebtn = (Button) findViewById(R.id.dividebtn);
+
+        tvReresulttv = (TextView) findViewById(R.id.tvReresulttv);
+        msg = (TextView) findViewById(R.id.msg);
+        clearScreen();
         btn0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,63 +115,93 @@ public class MainActivity extends AppCompatActivity {
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                numberInputMethod("+");
+                if (tvReresulttv == null)
+                    tvReresulttv.setText("");
+                else
+                    tvReresulttv.setText(tvReresulttv.getText() + " + ");
             }
         });
         subbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                numberInputMethod("-");
+                if (tvReresulttv == null)
+                    tvReresulttv.setText("");
+                else
+                    tvReresulttv.setText(tvReresulttv.getText() + " - ");
             }
         });
+        ;
         multiplybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                numberInputMethod("*");
+                if (tvReresulttv == null)
+                    tvReresulttv.setText("");
+                else
+                    tvReresulttv.setText(tvReresulttv.getText() + " * ");
             }
         });
         dividebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                numberInputMethod("/");
+                if (tvReresulttv == null)
+                    tvReresulttv.setText("");
+                else
+                    tvReresulttv.setText(tvReresulttv.getText() + " / ");
             }
         });
         percebtgebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                numberInputMethod("%");
+             numberInputMethod("%");
             }
         });
-
         dotbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                numberInputMethod(".");
+                if (tvReresulttv == null)
+                    tvReresulttv.setText(".");
+                else
+                    tvReresulttv.setText(tvReresulttv.getText() + ".");
             }
         });
         eualbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String expression = inputtexttv.getText().toString();
+                equalBtnMethod();
 
-                Expression e = new Expression(expression);
-                String result = String.valueOf(e.calculate());
-
-                tvReresulttv.setText(result);
-                msg.setText("Thank You");
             }
         });
 
     }
 
-    private void clearScreen() {
-        inputtexttv.setText("");
-        tvReresulttv.setText("0");
+    private void equalBtnMethod() {
+        String exp = tvReresulttv.getText().toString();
+        int i = 0;
+        i = exp.indexOf('%');
+        String exp1 = exp;
+        if (i != -1) {
+            float n1 = Float.parseFloat(exp1.substring(0, i - 1));
+            float n2 = Float.parseFloat(exp1.substring(i + 2, exp1.length()));
+            float res = (n1 / 100) * n2;
+            tvReresulttv.setText(res + "");
+        } else {
+            Calculation calculation = new Calculation();
+            if (calculation.calculate(exp) != -1)
+                tvReresulttv.setText(calculation.calculate(exp) + "");
+            else tvReresulttv.setText("invalid");
+            msg.setText("Ans.");
+        }
+
     }
 
-    private void numberInputMethod(String value) {
-        String input=inputtexttv.getText().toString();
-        input=input+value;
-        inputtexttv.setText(input);
+     void clearScreen() {
+        tvReresulttv.setText(" ");
+        msg.setText(" ");
+    }
+
+     void numberInputMethod(String s) {
+        tvReresulttv.setText(tvReresulttv.getText() + s);
     }
 }
+
+
